@@ -8,21 +8,25 @@ select = [
   "F",    # Pyflakes
   "E",    # pycodestyle
   "W",    # pycodestyle
-  #"C90",  # mccabe
+  "C90",  # mccabe
   "I",    # isort
+  # "N",    # pep8-naming
   "UP",   # pyupgrade
   "S",    # flake8-bandit
   "FBT",  # flake8-boolean-trap
   "B",    # flake8-bugbear
   "A",    # flake8-builtins
   "COM",  # flake8-commas
+  "C4",   # flake8-comprehensions
   "DTZ",  # flake8-datetimez
   "T10",  # flake8-debugger
+  # "EM",   # flake8-errmsg
   "EXE",  # flake8-executable
   "ISC",  # flake8-implicit-str-concat
   "ICN",  # flake8-import-conventions
   "LOG",  # flake8-logging
   "G",    # flake8-logging-format
+  # "INP",  # flake8-no-pep420
   "PIE",  # flake8-pie
   "PT",   # flake8-pytest-style
   "Q",    # flake8-quotes
@@ -34,12 +38,23 @@ select = [
   "TID",  # flake8-tidy-imports
   "ARG",  # flake8-unused-arguments
   "PTH",  # flake8-use-pathlib
+  # "TD",   # flake8-todos
   "PL",   # Pylint
+  # "TRY",  # tryceratops
   "FLY",  # flynt
   "PERF", # Perflint
   "FURB", # refurb
   "RUF",  # Ruff-specific rules
 ]
+extend-select = ["E301", "E302", "E303", "E304", "E305", "E306", "E225", "RUF100"]
+preview = true
+explicit-preview-rules = true
+ignore=[
+  "S101", # assert - Use of assert detected
+  "B011", # assert-false - Do not assert False (python -O removes these calls), raise AssertionError()
+  "S311", # suspicious-non-cryptographic-random-usage
+]
+mccabe.max-complexity = 15
 
 [format]
 indent-style = "space"
