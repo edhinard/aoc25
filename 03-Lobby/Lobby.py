@@ -7,8 +7,8 @@ def joltage(bank, length):
     ratings = list(map(int, bank))
     joltage = 0
     for i in reversed(range(length)):
-        # locate first highest joltage rating, skipping last i -> pos
-        pos = ratings.index(max(ratings)) if i == 0 else ratings.index(max(ratings[:-i]))
+        # locate first highest joltage rating, not looking at last i values → pos
+        pos = ratings.index(max(ratings[:-i if i else None]))
 
         # update total joltage with rating value at pos
         joltage = joltage * 10 + ratings[pos]
