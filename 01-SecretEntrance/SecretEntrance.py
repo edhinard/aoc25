@@ -2,51 +2,58 @@
 
 import pathlib
 
-DIAL_COUNT = 100
+DIAL_SIZE = 100
 START_POSITION = 50
 
 
-def part1():
-    dial = START_POSITION
+def rotations():
     with pathlib.Path("input.txt").open() as f:
         for line in f:
-            # lines look like: L68, L30 or R48
-            rotation = int(line[1:])
-            match line[0]:
-                case "L":
-                    dial = (dial - rotation) % DIAL_COUNT
-                case "R":
-                    dial = (dial + rotation) % DIAL_COUNT
-
-            # +1 each time the arrow stops at 0
-            if dial == 0:
-                yield 1
+            direction = line[0]
+            distance = int(line[1:])
+            yield direction, distance
 
 
-def part2():
-    dial = START_POSITION
-    with pathlib.Path("input.txt").open() as f:
-        for line in f:
-            rotation = int(line[1:])
+def pointatzero():
+    position = START_POSITION
+    count = 0
+    for direction, distance in rotations():
+        match direction:
+            case "L":
+                position = (position - distance) % DIAL_SIZE
+            case "R":
+                position = (position + distance) % DIAL_SIZE
 
-            # +1 each time the arrow makes a whole turn
-            yield rotation // DIAL_COUNT
-            rotation %= DIAL_COUNT
-
-            if rotation == 0:
-                continue
-            match line[0]:
-                case "L":
-                    # +1 each time the arrow moves leftward over 0
-                    if dial and dial - rotation <= 0:
-                        yield 1
-                    dial = (dial - rotation) % DIAL_COUNT
-                case "R":
-                    # +1 each time the arrow moves rightward over 0
-                    if dial and dial + rotation >= DIAL_COUNT:
-                        yield 1
-                    dial = (dial + rotation) % DIAL_COUNT
+        # count 1 each time the arrow stops at 0
+        if position == 0:
+            count += 1
+    return count
 
 
-print(f"Part #1: {sum(part1())}")
-print(f"Part #2: {sum(part2())}")
+def passoverzero():
+    position = START_POSITION
+    count = 0
+    for direction, distance in rotations():
+
+        # count 1 each time the arrow makes a whole turn
+        count += distance // DIAL_SIZE
+        distance %= DIAL_SIZE  # noqa: PLW2901
+        if distance == 0:
+            continue
+
+        match direction:
+            case "L":
+                # count 1 each time the arrow moves leftward over 0
+                if position and position - distance <= 0:
+                    count += 1
+                position = (position - distance) % DIAL_SIZE
+            case "R":
+                # count 1 each time the arrow moves rightward over 0
+                if position and position + distance >= DIAL_SIZE:
+                    count += 1
+                position = (position + distance) % DIAL_SIZE
+    return count
+
+
+print("Part One:", pointatzero())
+print("Part Two:", passoverzero())
