@@ -27,5 +27,14 @@ def isnotvalid2(ID):
     return False
 
 
-print(f"Part One: {sum(ID for ID in listids() if isnotvalid1(ID))}")
-print(f"Part Two: {sum(ID for ID in listids() if isnotvalid2(ID))}")
+print(
+    "Part One:",
+    sum(
+        ID for ID in listids() if isnotvalid1(ID)
+    ))
+print(
+    "Part Two:",
+    sum(
+        ID for ID in listids() if isnotvalid2(ID)
+    ))
+
