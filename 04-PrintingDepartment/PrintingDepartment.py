@@ -2,54 +2,48 @@
 
 import pathlib
 
-
-map = []
+# Prepare the two dimensions grid (row, column) with space all around
+grid = []
 with pathlib.Path("input.txt").open() as f:
-    for line in f:
-        map.append((".", *line.strip(), "."))
-map.insert(0, ["."] * len(map[0]))
-map.append(["."] * len(map[0]))
-
-count = 0
-for col in range(len(map[0])):
-    for row in range(len(map)):
-        if map[row][col] == "@":
-            t = 0
-            for c in (-1,0,1):
-                for r in (-1,0,1):
-                    if map[row+r][col+c] == "@":
-                        t += 1
-            if t < 5:
-                count += 1
-print(count)
+    grid.extend(
+        [".", *line.strip(), "."] for line in f
+    )
+grid.insert(0, ["."] * len(grid[0]))
+grid.append(["."] * len(grid[0]))
 
 
+MAXIMUM_ROLLS = 4
 
 
+def ismovableroll(grid, row, col):
+    # There is no roll in grid at this (row, col) position
+    if grid[row][col] != "@":
+        return False
 
-map = []
-with pathlib.Path("input.txt").open() as f:
-    for line in f:
-        map.append([".", *line.strip(), "."])
-map.insert(0, ["."] * len(map[0]))
-map.append(["."] * len(map[0]))
+    # Collect the 9 items around (row, col) in grid including the roll in the center
+    around = (*grid[row-1][col-1:col+2], *grid[row][col-1:col+2], *grid[row+1][col-1:col+2])
 
-count = 0
+    # The roll is movable if there are not too much other roll in the surrouding
+    return around.count("@") < MAXIMUM_ROLLS + 1
+
+
+count = None
 while True:
-    toberemoved = []
-    for col in range(len(map[0])):
-        for row in range(len(map)):
-            if map[row][col] == "@":
-                t = 0
-                for c in (-1,0,1):
-                    for r in (-1,0,1):
-                        if map[row+r][col+c] == "@":
-                            t += 1
-                if t < 5:
-                    toberemoved.append((row,col))
-    if len(toberemoved) == 0:
+    # List the movable rolls
+    movablerollpositions = [
+        (row, col) for row in range(len(grid)) for col in range(len(grid[0])) if ismovableroll(grid, row, col)
+    ]
+
+    if count is None:
+        count = len(movablerollpositions)
+        print("Part One:", count)
+    else:
+        count += len(movablerollpositions)
+
+    # Effective removal of rolls or loop exit
+    if len(movablerollpositions) == 0:
         break
-    count += len(toberemoved)
-    for row, col in toberemoved:
-        map[row][col] = "."
-print(count)
+    for row, col in movablerollpositions:
+        grid[row][col] = "."
+
+print("Part Two:", count)
