@@ -1,3 +1,5 @@
 __pycache__
 input.txt
-*.png
+test.txt
+.ruff_cache
+.github
