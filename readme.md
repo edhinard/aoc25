@@ -28,3 +28,10 @@ Some time was spent debugging the second part. Yes, The slice `[:0]` is not equi
 *00:09:57* / *00:13:37*
 
 I am often wrong, but this time I correctly guessed what the statement of the second part would be after reading the first.  I had to find a different name for the variable containing the map of the printing department in order to comply with rule [A001](https://docs.astral.sh/ruff/rules/builtin-variable-shadowing/): use `grid[row][col]` instead of `map[row][col]`.
+
+
+## [--- Day 5: Cafeteria ---](https://adventofcode.com/2025/day/5)
+
+*00:06:16* / *00:19:41*
+
+Nothing complicated so far. Which doesn't stop me from making stupid mistakes, and force me to wait one minute before submitting after a wrong response.
