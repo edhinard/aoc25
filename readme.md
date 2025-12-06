@@ -1,6 +1,8 @@
 # [Advent of Code 25](https://adventofcode.com/2025)
 
-My solutions for solving the puzzles (without committing the input data which should not be shared). Using Python. Once the problem is solved, I take the time to review the code, simplify it if possible, and comment it. I have added a GitHub workflow wich runs the *ruff* linter.  This year, there's no in-house *aoc.py* module to help with input decoding. It doesn't really help, actually.
+Once the problem is solved, I take the time to review/rewrite the code, simplify/optimize it if possible, and comment it. I have added a GitHub workflow wich runs the *ruff* linter.  This year, there's no in-house *aoc.py* module to help with input decoding. It doesn't really help, actually.
+
+If you wish to use it, you must provide your own data file, name it *input.txt* (do not share it) and place it next to the corresponding script.
 
 
 ## [--- Day 1: Secret Entrance ---](https://adventofcode.com/2025/day/1)
@@ -35,3 +37,10 @@ I am often wrong, but this time I correctly guessed what the statement of the se
 *00:06:16* / *00:19:41*
 
 Nothing complicated so far. Which doesn't stop me from making stupid mistakes, and force me to wait one minute before submitting after a wrong response.
+
+
+## [--- Day 6: Trash Compactor ---](https://adventofcode.com/2025/day/6)
+
+*00:11:38* / *00:38:02*
+
+Using zip to read a table of rows into columns is second nature to me. And while the implementation can sometimes be a bit lengthy, I find the result concise, clear, and elegant: `zip(*map(str.split, f))`
