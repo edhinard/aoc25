@@ -44,3 +44,10 @@ Nothing complicated so far. Which doesn't stop me from making stupid mistakes, a
 *00:11:38* / *00:38:02*
 
 Using zip to read a table of rows into columns is second nature to me. And while the implementation can sometimes be a bit lengthy, I find the result concise, clear, and elegant: `zip(*map(str.split, f))`
+
+
+## [--- Day 7: Laboratories ---](https://adventofcode.com/2025/day/7)
+
+*00:44:56* / *01:12:45*
+
+It took me over half an hour to understand the part 1! I then fell into the trap of part 2, listing all the paths when all I had to do was count them. Seeing that the result would take too long to arrive, I continued searching for a better solution. Unfortunately, the initial script was already running. Reboot.
