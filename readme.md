@@ -51,3 +51,10 @@ Using zip to read a table of rows into columns is second nature to me. And while
 *00:44:56* / *01:12:45*
 
 It took me over half an hour to understand the part 1! I then fell into the trap of part 2, listing all the paths when all I had to do was count them. Seeing that the result would take too long to arrive, I continued searching for a better solution. Unfortunately, the initial script was already running. Reboot.
+
+
+## [--- Day 8: Playground  ---](https://adventofcode.com/2025/day/8)
+
+*00:34:36* / *00:51:51*
+
+I can't explain why it's taking me so long. The first draft is very quick, but there are still a lot of mistakes. The goal of my participation was to improve in this area. I don't see any progress yet :(. But I'm still having a lot of fun :).
