@@ -4,11 +4,11 @@ import math
 import pathlib
 
 
-with pathlib.Path("input.txt").open() as f:
+with pathlib.Path("test.txt").open() as f:
     vertices = []
     for line in f:
         x, y = map(int, line.split(","))
-        vertices.append((x, y))
+        vertices.append([x, y])
 numvertices = len(vertices)
 
 # xs = [x for x,y in vertices]
@@ -17,9 +17,9 @@ numvertices = len(vertices)
 # assert ys[::2] == ys[1::2]
 
 area = []
-for x1,y1 in vertices:
-    for x2,y2 in vertices:
-        area.append(abs((x2-x1+1) * (y2-y1+1)))
+for x1, y1 in vertices:
+    for x2, y2 in vertices:
+        area.append(abs((x2 - x1 + 1) * (y2 - y1 + 1)))
 print(sorted(area)[-1])
 
 # xmin = min(x for x,y in vertices)
@@ -68,29 +68,73 @@ print(sorted(area)[-1])
 #                 return False
 #     return True
 
-xcoords = sorted({x for x, y in vertices})
-ycoords = sorted({y for x, y in vertices})
-region = [[0] * len(ycoords)] * len(xcoords)
-
-for x1, y1, x2, y2 in (compressedpair(i, i-1) for i in range(len(vertices)):
-    pass
 
 def compressedpair(i, j):
     x1, y1 = vertices[i]
     x2, y2 = vertices[j]
-    xmin, xmax = min(x1, x2), max(x1, x2)
-    ymin, ymax = min(y1, y2), max(y1, y2)
-    return xcoords.index(xmin), ycoords.index(ymin), xcoords.index(xmax), ycoords.index(ymax)
+    #    xmin, xmax = min(x1, x2), max(x1, x2)
+    #    ymin, ymax = min(y1, y2), max(y1, y2)
+    #    return xcoords.index(xmin), ycoords.index(ymin), xcoords.index(xmax), ycoords.index(ymax)
+    return (xcoords.index(x1), ycoords.index(y1)), (xcoords.index(x2), ycoords.index(y2))
 
 
-area = []
-for i in range(numvertices-1):
-    for j in range(i+1, numvertices):
-        # Rectangle defined by two of the vertices
-        xmin, ymin, xmax, ymax = compressedpair(i, j)
-        if overlap(xmin, ymin, xmax, ymax):
-            area.append((xmax-xmin+1) * (ymax-ymin+1))
-print(sorted(area)[-1])
+def corners():
+    iterator = iter((*vertices, *vertices[:2]))
+    a = next(iterator)
+    b = next(iterator)
+    for c in iterator:
+        yield a, b, c
+        a, b = b, c
 
 
-# 9003540 too low
+orientation = sum(
+    +1 if (x2 - x1) * (y3 - y2) > (y2 - y1) * (x3 - x2) else -1 for (x1, y1), (x2, y2), (x3, y3) in corners()
+)
+if orientation > 0:
+    up    = +0.5
+    down  = -0.5
+    right = -0.5
+    left  = +0.5
+else:
+    up    = -0.5
+    down  = +0.5
+    right = +0.5
+    left  = -0.5
+X = 0
+Y = 1
+for i in range(len(vertices)):
+    v1 = vertices[i-1]
+    v2 = vertices[i]
+    if v1[X] == v2[X]:
+        if v1[Y] < v2[Y]:
+            v1[X] += up
+            v2[X] += up
+        else:
+            v1[X] += down
+            v2[X] += down
+    elif v1[Y] == v2[Y]:
+        if v1[X] < v2[X]:
+            v1[Y] += right
+            v2[Y] += right
+        else:
+            v1[Y] += left
+            v2[Y] += left
+xcoords = sorted({v[X] for v in vertices})
+ycoords = sorted({v[Y] for v in vertices})
+region = [[0] * len(ycoords)] * len(xcoords)
+print(region)
+print(vertices)
+
+
+
+# area = []
+# for i in range(numvertices-1):
+#     for j in range(i+1, numvertices):
+#         # Rectangle defined by two of the vertices
+#         xmin, ymin, xmax, ymax = compressedpair(i, j)
+#         if overlap(xmin, ymin, xmax, ymax):
+#             area.append((xmax-xmin+1) * (ymax-ymin+1))
+# print(sorted(area)[-1])
+
+
+# # 9003540 too low
