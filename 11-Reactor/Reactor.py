@@ -4,7 +4,7 @@ import functools
 import pathlib
 
 with pathlib.Path("input.txt").open() as f:
-    nodes = {name: children.split() for name, children in (l.split(":", maxsplit=1) for l in f)}
+    nodes = {name: children.split() for name, children in (line.split(":", maxsplit=1) for line in f)}
     nodes["out"] = []
 
 
